@@ -17,9 +17,9 @@ export default function Header() {
 
                 <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-700 lg:flex">
                     {navItems.map((item) => (
-                        <a key={item} href={`#${item.toLowerCase()}`} className="relative transition hover:text-[var(--dentary-blue)] 
+                        <a key={item} href={`#${item.toLowerCase()}`} className="relative transition hover:text-dentary-blue
                             after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                            after:bg-[var(--dentary-blue)] after:transition-all after:duration-300
+                            after:bg-dentary-blue after:transition-all after:duration-300
                             hover:after:w-full">
                             {item}
                         </a>

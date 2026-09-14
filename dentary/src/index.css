@@ -4,7 +4,9 @@
 
 @theme{
     --font-dentary: "Doppio One", sans-serif;
-    --color-dentary-blue-dark: #0a8ed8;
+    /* --color-dentary-blue-dark: #0a8ed8; */
+    --color-dentary-blue-dark: #0D47A1;
+    --color-dentary-blue: #2196F3;
 }
 :root {
   --dentary-blue: #0ea5e9;
