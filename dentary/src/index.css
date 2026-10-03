@@ -5,8 +5,8 @@
 @theme{
     --font-dentary: "Doppio One", sans-serif;
     /* --color-dentary-blue-dark: #0a8ed8; */
-    --color-dentary-blue-dark: #0D47A1;
-    --color-dentary-blue: #2196F3;
+    --color-dentary-blue-dark: #2196F3; 
+    --color-dentary-blue: #90CAF9;
 }
 :root {
   --dentary-blue: #0ea5e9;
@@ -62,7 +62,7 @@ a {
 }
 
 .section-kicker {
-  letter-spacing: 0.22em;
+  letter-spacing: 0.22rem;
   font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -76,11 +76,11 @@ a {
   color: #0f172a;
 }
 
-.soft-card {
+/* .soft-card {
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(148, 163, 184, 0.18);
   box-shadow: var(--dentary-shadow);
-}
+} */
 
 /* .btn-primary {
   border: 0;
