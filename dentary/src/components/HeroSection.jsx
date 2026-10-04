@@ -1,5 +1,5 @@
 import heroImg from '../assets/dentary_hero.png'
-import DentaryBtn from './buttons/dentaryBtn'
+import DentaryBtn from './buttons/DentaryBtn'
 import DentaryBorderBtn from './buttons/DentaryBorderBtn'
 
 const quickBadges = [

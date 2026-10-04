@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import DentaryBtn from './buttons/dentaryBtn'
+import DentaryBtn from './buttons/DentaryBtn'
 import DentaryHambBtn from './buttons/DentaryHambBtn'
 
 const navItems = ['Inicio', 'Nosotros', 'Tratamientos', 'Testimonios', 'Contacto']
