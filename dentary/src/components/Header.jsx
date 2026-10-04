@@ -1,8 +1,12 @@
-import DentaryBtn from "./buttons/dentaryBtn"
+import { useState } from 'react'
+import DentaryBtn from './buttons/dentaryBtn'
+import DentaryHambBtn from './buttons/DentaryHambBtn'
 
 const navItems = ['Inicio', 'Nosotros', 'Tratamientos', 'Testimonios', 'Contacto']
 
 export default function Header() {
+    const [menuOpen, setMenuOpen] = useState(false)
+
     return (
         <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm">
             <div className="container-shell flex items-center justify-between py-2">
@@ -26,9 +30,41 @@ export default function Header() {
                     ))}
                 </nav>
 
-                <DentaryBtn>
-                    Iniciar sesión
-                </DentaryBtn>
+                <div className="hidden lg:block">
+                    <DentaryBtn>
+                        Iniciar sesión
+                    </DentaryBtn>
+                </div>
+
+                <div className="lg:hidden">
+                    <DentaryHambBtn
+                        isOpen={menuOpen}
+                        onClick={() => setMenuOpen((prev) => !prev)}
+                    />
+                </div>
+            </div>
+
+            <div className={`overflow-hidden transition-all duration-300 lg:hidden ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="container-shell border-t border-slate-200 bg-white/95 px-5 py-4 shadow-md">
+                    <nav className="flex flex-col gap-2 text-sm font-semibold text-slate-700">
+                        {navItems.map((item) => (
+                            <a
+                                key={item}
+                                href={`#${item.toLowerCase()}`}
+                                onClick={() => setMenuOpen(false)}
+                                className="rounded-lg px-3 py-2 transition hover:bg-slate-100 hover:text-dentary-blue"
+                            >
+                                {item}
+                            </a>
+                        ))}
+                    </nav>
+
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                        <DentaryBtn>
+                            Iniciar sesión
+                        </DentaryBtn>
+                    </div>
+                </div>
             </div>
         </header>
     )
