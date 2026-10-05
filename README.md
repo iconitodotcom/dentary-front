@@ -10,50 +10,124 @@
 
 ## Deploy
 
-This project can be deployed to Fly.io using the Fly.io web dashboard and GitHub, without using the terminal or `flyctl` commands.
+There are two valid ways to deploy this app:
 
-### Option A: Deploy from GitHub using the Fly.io web dashboard
+1. Use the Fly.io dashboard + GitHub integration
+2. Use GitHub Actions + a `FLY_API_TOKEN` secret
 
-This is the easiest option if you want to avoid the command line.
+This project is already set up for the GitHub Actions approach. If you want the build to show up in the GitHub Actions tab, this is the setup you need.
 
-1. Push this project to a GitHub repository.
-2. Go to https://fly.io and sign in.
-3. In the Fly.io dashboard, click Create App.
-4. Choose Deploy with GitHub.
-5. Connect your GitHub account if it is not already connected.
-6. Select the repository that contains this React project.
-7. Choose the branch to deploy, usually `main`.
-8. Fly.io will detect the project and start the build. For a React/Vite app, you should include a Dockerfile so Fly can run the built frontend correctly.
-9. Confirm the app settings and click Deploy.
-10. Wait for the build to finish.
-11. Once the deploy is complete, Fly.io will give you a public URL for the app.
+### 1) Create the Fly app and get the API token
 
-### Option B: Use a fly.toml file in the repo
+1. Go to https://fly.io.
+2. Sign in with your GitHub account.
+3. Create or open your app in Fly.
+4. In the Fly dashboard, open the app settings or account settings.
+5. Look for the option to create a token or access token.
+6. Copy the token value.
 
-Yes, this is possible, and it is a good idea if you want your app metadata stored in the repository.
+This token is the value that must be stored in GitHub as a secret.
 
-`fly.toml` is not always mandatory when deploying from the Fly.io web dashboard, but it is commonly used to define the app name and region. You can keep it in the project so the configuration travels with the code.
+### 2) Add the secret in GitHub
+
+In your GitHub repository:
+
+1. Open the repo.
+2. Go to Settings.
+3. Open Secrets and variables.
+4. Open Actions.
+5. Click New repository secret.
+6. Name the secret exactly:
+
+```text
+FLY_API_TOKEN
+```
+
+7. Paste the Fly token you copied.
+8. Save it.
+
+This is required because the workflow reads:
+
+```yaml
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+```
+
+### 3) GitHub Actions workflow
+
+The workflow file is at:
+
+```text
+.github/workflows/deploy.yml
+```
+
+It should look like this:
+
+```yaml
+name: Deploy to Fly.io
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only --config fly.toml
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+```
+
+This workflow triggers every time you push to `main`.
+
+### 4) Make sure the repo contains the Fly config
+
+Your project should include these files:
+
+- `fly.toml`
+- `Dockerfile`
 
 Example `fly.toml`:
 
 ```toml
-app = "dentary-app"
-primary_region = "iad"
+app = 'dentary-front'
+primary_region = 'dfw'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
 ```
 
-Example `Dockerfile` for a Vite React app:
+Example `Dockerfile` for a Vite app:
 
 ```dockerfile
 FROM node:20-alpine AS build
 WORKDIR /app
 
-COPY package*.json ./
+COPY dentary/package*.json ./
 RUN npm install
 
-COPY . .
+COPY dentary ./
 RUN npm run build
 
 FROM nginx:alpine
@@ -62,32 +136,32 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-### Recommended workflow for this project
+### 5) Push to GitHub to trigger the deploy
 
-Because this is a Vite + React app, use this setup:
+After saving the secret, do this:
 
-- GitHub repository
-- `Dockerfile` in the project root
-- `fly.toml` in the project root if you want project-level configuration
-- Fly.io dashboard connected to GitHub
-- automatic deploys on push to the selected branch
+1. Commit your changes.
+2. Push to the `main` branch.
+3. Go to GitHub > Actions.
+4. You should see the `Deploy to Fly.io` workflow running.
 
-### Future updates
+### 6) If it still does not trigger
 
-After the initial deploy:
+Check these items:
 
-1. Commit your changes to GitHub.
-2. Push to the connected branch.
-3. Fly.io detects the new push.
-4. It builds the app again and deploys automatically.
-
-This means you do not need to run terminal commands in order to deploy after the initial setup.
+- The branch is `main`
+- The GitHub secret is named exactly `FLY_API_TOKEN`
+- The token is valid
+- The app name in `fly.toml` matches the app in Fly.io
+- The repository is the correct one connected to Fly
 
 ### Notes
 
-- `fly.toml` is optional in the web UI flow, but useful for versioning app config in Git.
-- The most important requirement for this particular project is a valid `Dockerfile`, because Vite builds static files and Fly needs a container/runtime to serve them.
-- If you want to deploy without GitHub, Fly.io also supports other deployment methods, but GitHub is the simplest method for this workflow.
+- The GitHub Actions workflow is the method that makes deploys show up in the GitHub Actions tab.
+- If you prefer the web-based Fly deployment, you can skip the workflow and use the Fly dashboard instead.
+- In either case, the `FLY_API_TOKEN` secret is the key that lets GitHub or Fly authenticate to your Fly account.
 
+## Develop by 
+[iconito.io](https://www.iconito.io/)
 ## Develop by 
 [iconito.io](https://www.iconito.io/)
