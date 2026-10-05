@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import DentaryBtn from './buttons/DentaryBtn'
 import DentaryHambBtn from './buttons/DentaryHambBtn'
+import DentaryLogo from './Logo/DentaryLogo'
 
 const navItems = ['Inicio', 'Nosotros', 'Tratamientos', 'Testimonios', 'Contacto']
 
@@ -11,12 +12,7 @@ export default function Header() {
         <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-sm">
             <div className="container-shell flex items-center justify-between py-2">
                 <div className="flex items-center gap-3">
-                    <div>
-                        <div className="font-dentary leading-none">
-                            <h1 className="text-[3rem] font-black">Dentary</h1>
-                            <p className="text-xs tracking-[-0.06em]">Odontología Especializada <span className="text-dentary-blue-dark">Plus</span></p>
-                        </div>
-                    </div>
+                    <DentaryLogo></DentaryLogo>
                 </div>
 
                 <nav className="hidden items-center gap-8 text-sm font-semibold text-slate-700 lg:flex">

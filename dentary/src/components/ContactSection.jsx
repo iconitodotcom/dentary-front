@@ -1,3 +1,5 @@
+import DentaryLogo from "./Logo/DentaryLogo"
+
 export default function ContactSection() {
   return (
     <section id="contacto" className="container-shell py-20">
@@ -25,15 +27,8 @@ export default function ContactSection() {
       <footer className="mt-16 pb-10">
         <div className="grid gap-10 border-t border-slate-200 pt-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--dentary-blue)] text-lg font-bold text-white">
-                D
-              </div>
-              <div className="text-2xl font-black italic tracking-tight text-slate-800">
-                Dentary<span className="text-[var(--dentary-blue)]">Plus</span>
-              </div>
-            </div>
-            <p className="max-w-xs text-sm leading-6 text-slate-600">
+            <DentaryLogo></DentaryLogo>
+            <p className="max-w-xs text-sm leading-6 text-slate-600 mt-2">
               Cuidamos tu sonrisa con atención profesional, tecnología avanzada y un trato humano.
             </p>
           </div>
