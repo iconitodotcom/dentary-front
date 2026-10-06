@@ -9,20 +9,16 @@ const quickBadges = [
   { label: 'Ambiente cómodo', icon: '◌' },
 ]
 
-export default function HeroSection(){
+export default function HeroSection({ onOpenDashboard }) {
     return (
         <section className="relative overflow-hidden bg-[#f3f7ff] pb-12 pt-8 md:pb-16 md:pt-10">
             <div className="container-shell px-5 md:px-8 md:py-6">
-                {/* Imagen de fondo */}
                 <img 
                     src={heroImg}
                     alt="Paciente sonriendo en consulta con dentista"
-                    className="hidden absolute right-0 top-0 h-full w-[65%] object-cover object-center
-                    opacity-20 md:block md:w-[65%] md:opacity-100"
+                    className="hidden absolute right-0 top-0 h-full w-[65%] object-cover object-center opacity-20 md:block md:w-[65%] md:opacity-100"
                 />
-                {/* Capa que mezcla la imagen con el fondo */}
                 <div className="absolute inset-0 z-1 bg-gradient-to-r from-[#f3f7ff] via-[#f3f7ff]/40 via-20% to-transparent"></div>
-                {/* Contenido del Hero */}
                 <div className="relative z-10 mx-auto max-w-4xl px-6 py-24 xl:max-w-7xl">
                     <div className="max-w-xl xl:max-w-2xl"> 
                         <p className="tracking-[0.22rem] text-[0.8rem] font-extrabold uppercase text-dentary-blue-dark"> Sonrisas que transforman </p>
@@ -38,13 +34,13 @@ export default function HeroSection(){
                         </div>
                        
                         <div className="flex flex-wrap item-center gap-4 pt-3 md:pt-5">
-                            <DentaryBtn> Agenda tu cita </DentaryBtn>
+                            <DentaryBtn onClick={onOpenDashboard}> Agenda tu cita </DentaryBtn>
                             <DentaryBorderBtn> Conoce más </DentaryBorderBtn>
                         </div>
 
                         <div className="flex flex-wrap gap-3 pt-3 md:pt-5">
                             {quickBadges.map((badge) => (
-                                <div className="flex">
+                                <div key={badge.label} className="flex">
                                     <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-[15px] font-semibold text-slate-600">
                                         <span className="text-dentary-blue-dark">{badge.icon}</span>
                                     </div>

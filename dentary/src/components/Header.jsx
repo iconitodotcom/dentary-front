@@ -5,7 +5,7 @@ import DentaryLogo from './Logo/DentaryLogo'
 
 const navItems = ['Inicio', 'Nosotros', 'Tratamientos', 'Testimonios', 'Contacto']
 
-export default function Header() {
+export default function Header({ onOpenDashboard }) {
     const [menuOpen, setMenuOpen] = useState(false)
 
     return (
@@ -27,7 +27,7 @@ export default function Header() {
                 </nav>
 
                 <div className="hidden lg:block">
-                    <DentaryBtn>
+                    <DentaryBtn onClick={onOpenDashboard}>
                         Iniciar sesión
                     </DentaryBtn>
                 </div>
@@ -56,7 +56,7 @@ export default function Header() {
                     </nav>
 
                     <div className="mt-4 border-t border-slate-200 pt-4">
-                        <DentaryBtn>
+                        <DentaryBtn onClick={onOpenDashboard}>
                             Iniciar sesión
                         </DentaryBtn>
                     </div>
