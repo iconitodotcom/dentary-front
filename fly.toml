@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for dentary-front on 2026-10-05T23:57:37Z
+# fly.toml app configuration file generated for dentary-front on 2026-10-06T00:18:41Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -10,7 +10,7 @@ primary_region = 'ams'
   dockerfile = 'Dockerfile'
 
 [http_service]
-  internal_port = 8080
+  internal_port = 80
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
