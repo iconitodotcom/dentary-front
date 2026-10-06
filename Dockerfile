@@ -2,7 +2,7 @@ FROM node:20-alpine AS build
 WORKDIR /app
 COPY dentary/package*.json ./
 RUN npm ci
-COPY . .
+COPY dentary/ .
 RUN npm run build
 
 FROM nginx:alpine
